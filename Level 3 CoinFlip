@@ -34,7 +34,12 @@ contract CoinFlip {
   }
 }
 
-//CoinFlip Exploit contract
+// CoinFlip Exploit contract
+
+/* Contract CoinFlipExploit created to mirror the logic of the contract CoinFlip. CoinFlipExploit uses
+the resulting boolean to forward the "guess" to CoinFlip flip() function. As a result, the exploit contract
+will always win by increasing the consecutiveWins variable. */ 
+
 
 pragma solidity ^0.6.0;
 
