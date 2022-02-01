@@ -45,7 +45,7 @@ contract Fallout {
 
 // This contract is exploited by calling the function Fal1out, which will grant the attacker ownership of the contract and allow them to withdraw funds
 
-**Web3 Javascript Browser Console**
+**Web3 Browser Console Exploit**
 
 contract.Fal1out();
 await contract.collectAllocations();
