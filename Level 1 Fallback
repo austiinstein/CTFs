@@ -48,7 +48,7 @@ receive() external payable {
 
 }
 
-**Web3 Javascript Browser Console**
+**Web3 Browser Console Exploit**
 
 contract.contribute({value: toWei("0.0001")})
 
